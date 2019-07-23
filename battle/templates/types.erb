@@ -1,0 +1,12 @@
+<%= header %>
+%xh<%= t('battle.combatant_types') %>%xn
+
+%xh<%= t('battle.combatant_types_titlebar') %>%xn
+<% else %>
+<% end %>
+<% list.each do |name, info| %>
+<%= left( name, 20 ) -%>
+<%= left( field(info, 'weapon' ), 20 ) -%>
+<%= left( field(info, 'armor'), 20 ) -%>
+<% end %>
+<%= footer %>

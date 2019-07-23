@@ -1,0 +1,8 @@
+<%= header %>
+%xh<%= t('battle.stances_title') %>%xn
+
+%xh<%= t('battle.stance_subtitle') %>%xn
+<% stances.each do |name, value| %>
+<%= left( name_and_abbr(name), 20) %><%= attack_mod(value) %>     <%= defense_mod(value) %>
+<% end %>
+<%= footer %>

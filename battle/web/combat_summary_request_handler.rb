@@ -1,0 +1,55 @@
+module AresMUSH
+  module Battle
+
+    #provide combat info for the user
+    class CombatSummaryRequestHandler
+      def handle(request)
+        id = request.args[:id]
+        enactor = request.enactor
+
+        error = Website.check_login(request, true)
+        return error if error
+
+        combat = Combat[id]
+        if (!combat)
+          return { error: t('battle.invalid_combat_number') }
+        end
+
+        can_manage = enactor && (enactor == combat.organizer || enactor.is_admin?)
+
+        teams = combat.active_combatants.sort_by { |c| c.team }
+          .group_by { |c| c.team }
+          .map { |team, members|
+            {
+              team: team,
+              combatants: members.map { |c|
+                {
+                  id: c.id,
+                  name: c.name,
+                  is_ko: c.is_ko,
+                  # weapon: c.weapon,
+                  # armor: c.armor,
+                  # is_npc: c.is_npc?,
+                  # ammo: c.ammo ? "(#{c.ammo})" : '',
+                  damage_boxes: (-c.total_damage_mod).ceil.times.map { |d| d },
+                  damage: c.associated_model.damage.select { |d| !d.healed }.map { |d| "#{d.current_severity} - #{d.description}" },
+                  stance: c.stance,
+                  action: c.action ? c.action.print_action_short : "",
+                  can_edit: can_manage || (enactor && enactor.name == c.name)
+                }
+              }
+            }
+          }
+
+
+        {
+          id: id,
+          organizer: combat.organizer.name,
+          can_manage: can_manage,
+          combatant_types: Battle.combatant_types.keys,
+          teams: teams
+        }
+      end
+    end
+  end
+end
