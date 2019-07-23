@@ -1,6 +1,6 @@
 $:.unshift File.dirname(__FILE__)
 
-#Important Controller file for executing class files listed in above folders
+#important Controller file for executing class files listed in above folders
 module AresMUSH
   module Battle
     def self.plugin_dir
