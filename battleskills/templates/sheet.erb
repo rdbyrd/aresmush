@@ -1,0 +1,39 @@
+%lh
+%xh<%= char.name %>%xn <%= center( approval_status, 23 ) %>
+<%= line_with_text t('battleskills.attributes_title') -%>
+<% attrs.each do |a| -%>
+<%= a -%>
+<% end %> 
+
+
+<%= line_with_text t('battleskills.action_skills_title') -%>
+<% action_skills.each do |a| -%>
+<%= a -%>
+<% end %> 
+
+<% if specialties %>
+
+%xh<%= t('battleskills.specialties_title') %>%xn <%= specialties %>
+<% end %>
+
+<%= line_with_text t('battleskills.background_skills_title') -%>
+<% background_skills.each do |b| -%>
+<%= b -%>
+<% end %> 
+
+
+<%= line_with_text t('battleskills.languages_title') -%>
+<% languages.each do |l| -%>
+<%= l -%>
+<% end %> 
+
+<% if use_advantages %>
+<%= line_with_text t('battleskills.advantages_title') -%>
+<% advantages.each do |a| -%>
+<%= a -%>
+<% end %>
+
+<% end %>
+
+%xh<%= t('battleskills.xp_title') %>%xn <%= left( char.xp, 30 ) %> %xh<%= t('battleskills.luck_title') %>%xn <%= luck %>
+%lf
